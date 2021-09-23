@@ -1,0 +1,8 @@
+type Verify{
+    accessKey: String,
+    secretKey: String
+}
+
+type Query{
+    verify(accessKey: String,secretKey: String):Verify!
+}
