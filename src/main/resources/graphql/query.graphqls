@@ -1,8 +1,28 @@
-type Verify{
-    accessKey: String,
+type StatusResponse{
+    resource: String
+    finish: String
+    kind: String
+}
+input SubNet{
+    name: String
+    cidr: String
+}
+input StackInfraInput{
+    environment: String
+    accessKey: String
     secretKey: String
+    route53Domain: String
+    instanceType: String
+    desiredSize: String
+    maxSize: String
+    vpc: String
+    subnet: [SubNet]
 }
 
 type Query{
-    verify(accessKey: String,secretKey: String):Verify!
+    status: [StatusResponse]
+}
+type Mutation{
+    verify(accessKey: String, secretKey: String): String
+    stackInfra(stackInfraInput: StackInfraInput!): String
 }

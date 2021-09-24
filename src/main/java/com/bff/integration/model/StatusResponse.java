@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KeyResponse {
-    private String id;
+public class StatusResponse {
+    private String resource;
+    private String finish;
+    private String kind;
 }

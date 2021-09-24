@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KeyResponse {
-    private String id;
+public class SubNet {
+    private String name;
+    private String cidr;
 }
