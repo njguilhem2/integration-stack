@@ -17,6 +17,7 @@ public class StackInfraInput {
     private String instanceType;
     private String desiredSize;
     private String maxSize;
+    private String minSize;
     private String vpc;
     private List<SubNet> subnet;
 }

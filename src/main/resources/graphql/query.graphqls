@@ -15,6 +15,7 @@ input StackInfraInput{
     instanceType: String
     desiredSize: String
     maxSize: String
+    minSize: String
     vpc: String
     subnet: [SubNet]
 }

@@ -33,10 +33,10 @@ public class VerifyService {
         return verify;
     }
 
-    public Boolean stackInfra(StackInfraInput stackInfraInput) {
+    public String stackInfra(StackInfraInput stackInfraInput) {
         restTemplanteConfig.restTemplate()
                 .postForEntity(urlStack, stackInfraInput, KeyResponse.class);
-        return Boolean.TRUE;
+        return "Started";
     }
 
     public List<StatusResponse> verifyStatus() {
