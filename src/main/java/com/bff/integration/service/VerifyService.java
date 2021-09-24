@@ -24,7 +24,6 @@ public class VerifyService {
     @Value("${http.request.status-infra}")
     private String urlStatusInfra;
 
-
     @Autowired
     private RestTemplanteConfig restTemplanteConfig;
 

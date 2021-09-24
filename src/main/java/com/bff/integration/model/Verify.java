@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Verify {
-    private String secretKey;
     private String accessKey;
-
+    private String secretKey;
 }
