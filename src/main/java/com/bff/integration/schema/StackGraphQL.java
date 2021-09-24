@@ -10,6 +10,8 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -19,17 +21,22 @@ public class StackGraphQL implements GraphQLQueryResolver, GraphQLMutationResolv
     private VerifyService verifyService;
 
     public String verify(String accessKey, String secretKey) {
-        verifyService.verifyKey(new Verify(accessKey, secretKey));
+        //verifyService.verifyKey(new Verify(accessKey, secretKey));
         return "success";
     }
 
     public List<StatusResponse> status() {
-        return verifyService.verifyStatus();
+        //return verifyService.verifyStatus();
+
+        return new ArrayList<StatusResponse>(
+                Arrays.asList(new StatusResponse("resource","false","subnet")));
     }
 
     public String stackInfra(StackInfraInput stackInfraInput) {
-        verifyService.stackInfra(stackInfraInput);
+        System.out.println(stackInfraInput.getAccessKey() +stackInfraInput.getDesiredSize()+
+                stackInfraInput.getEnvironment()+stackInfraInput.getMaxSize()+ stackInfraInput.getRoute53Domain()+
+                stackInfraInput.getVpc()+stackInfraInput.getSubnet());
+        //verifyService.stackInfra(stackInfraInput);
         return "started";
     }
-
 }
