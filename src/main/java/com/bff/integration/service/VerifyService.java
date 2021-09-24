@@ -7,6 +7,7 @@ import com.bff.integration.model.StackInfraInput;
 import com.bff.integration.model.StatusResponse;
 import com.bff.integration.model.Verify;
 import com.bff.integration.model.VerifyResponse;
+import com.bff.integration.schema.exceptions.DomainException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -30,9 +31,13 @@ public class VerifyService {
     private RestTemplanteConfig restTemplanteConfig;
 
     public Verify verifyKey(Verify verify) {
-        restTemplanteConfig.restTemplate()
-                .postForEntity(urlVerify, verify, KeyResponse.class);
-        return verify;
+        try {
+            restTemplanteConfig.restTemplate()
+                    .postForEntity(urlVerify, verify, KeyResponse.class);
+            return verify;
+        }catch (Exception ex){
+            throw new DomainException("Invalid keys");
+        }
     }
     public String stackInfra(StackInfraInput stackInfraInput) {
         restTemplanteConfig.restTemplate()
