@@ -12,6 +12,6 @@ management:
               show-details: NEVER
 http:
     request:
-      verify: "http://localhost:8081/v1/verify/keys"
-      stack: "http://localhost:8081/v1/orange/create"
-      status-infra: "http://localhost:8081/v1/orange/status"
+      verify: "http://connector.melgar.link/v1/verify/keys"
+      stack: "http://connector.melgar.link/v1/orange/create"
+      status-infra: "http://connector.melgar.link/v1/orange/status"
