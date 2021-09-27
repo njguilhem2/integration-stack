@@ -25,7 +25,7 @@ input StackInfraInput{
 }
 
 type Query{
-    status(environment: String, accessKey: String, secretKey: String): Status
+    status: Status
 }
 type Mutation{
     verify(accessKey: String, secretKey: String): String
