@@ -2,6 +2,7 @@ package com.bff.integration.schema;
 
 
 import com.bff.integration.model.StackInfraInput;
+import com.bff.integration.model.Status;
 import com.bff.integration.model.StatusResponse;
 import com.bff.integration.model.Verify;
 import com.bff.integration.service.VerifyService;
@@ -31,11 +32,11 @@ public class StackGraphQL implements GraphQLQueryResolver, GraphQLMutationResolv
         return "success";
     }
 
-    public List<StatusResponse> status() {
+    public Status status() {
         logger.info("received request status");
-         var listStatus = verifyService.verifyStatus();
+         var status = verifyService.verifyStatus();
         logger.info("return response status");
-        return listStatus;
+        return status;
     }
 
     public String stackInfra(StackInfraInput stackInfraInput) {

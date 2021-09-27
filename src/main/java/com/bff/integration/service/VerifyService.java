@@ -4,6 +4,7 @@ import com.bff.integration.model.KeyResponse;
 import com.bff.integration.config.RestTemplanteConfig;
 import com.bff.integration.model.KindResponse;
 import com.bff.integration.model.StackInfraInput;
+import com.bff.integration.model.Status;
 import com.bff.integration.model.StatusResponse;
 import com.bff.integration.model.Verify;
 import com.bff.integration.model.VerifyResponse;
@@ -42,15 +43,12 @@ public class VerifyService {
     public String stackInfra(StackInfraInput stackInfraInput) {
         restTemplanteConfig.restTemplate()
                 .postForEntity(urlStack, stackInfraInput, KeyResponse.class);
-        return "Started";
+        return "started";
     }
 
-    public List<StatusResponse> verifyStatus() {
+    public Status verifyStatus() {
         var verifyResponse =
                 restTemplanteConfig.restTemplate().getForObject(urlStatusInfra, KindResponse.class);
-        return verifyResponse.getKindStatus().stream().map(statusResponse ->
-                new StatusResponse
-                        (statusResponse.getResource(),statusResponse.getFinish(),statusResponse.getKind()))
-                .collect(Collectors.toList());
+        return new Status(Boolean.getBoolean(verifyResponse.getCompleted()),verifyResponse.getKindStatus());
     }
 }

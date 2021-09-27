@@ -3,6 +3,10 @@ type StatusResponse{
     finish: String
     kind: String
 }
+type Status{
+    completed: Boolean
+    status: [StatusResponse]
+}
 input SubNet{
     name: String
     cidr: String
@@ -21,7 +25,7 @@ input StackInfraInput{
 }
 
 type Query{
-    status: [StatusResponse]
+    status: Status
 }
 type Mutation{
     verify(accessKey: String, secretKey: String): String
