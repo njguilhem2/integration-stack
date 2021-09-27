@@ -1,5 +1,6 @@
 package com.bff.integration.service;
 
+import com.bff.integration.model.AddonsExecute;
 import com.bff.integration.model.KeyResponse;
 import com.bff.integration.config.RestTemplanteConfig;
 import com.bff.integration.model.KindResponse;
@@ -27,6 +28,8 @@ public class VerifyService {
     private String urlStack;
     @Value("${http.request.status-infra}")
     private String urlStatusInfra;
+    @Value("${http.request.addons}")
+    private String urlAddons;
 
     @Autowired
     private RestTemplanteConfig restTemplanteConfig;
@@ -36,10 +39,11 @@ public class VerifyService {
             restTemplanteConfig.restTemplate()
                     .postForEntity(urlVerify, verify, KeyResponse.class);
             return verify;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new DomainException("Invalid keys");
         }
     }
+
     public String stackInfra(StackInfraInput stackInfraInput) {
         restTemplanteConfig.restTemplate()
                 .postForEntity(urlStack, stackInfraInput, KeyResponse.class);
@@ -49,6 +53,11 @@ public class VerifyService {
     public Status verifyStatus() {
         var verifyResponse =
                 restTemplanteConfig.restTemplate().getForObject(urlStatusInfra, KindResponse.class);
-        return new Status(Boolean.getBoolean(verifyResponse.getCompleted()),verifyResponse.getKindStatus());
+        if (Boolean.getBoolean(verifyResponse.getCompleted()) == true) {
+            AddonsExecute addonsExecute = new AddonsExecute("loan-itau","AKIAWRXEZPKTKAUYGDQA","fJxBQvWtPbg7/f11VfoB/bx9w+PSluRdhEKMGsdt",
+                    "itsmelgar.com");
+            restTemplanteConfig.restTemplate().postForEntity(urlAddons,addonsExecute,KindResponse.class);
+        }
+        return new Status(Boolean.getBoolean(verifyResponse.getCompleted()), verifyResponse.getKindStatus());
     }
 }
