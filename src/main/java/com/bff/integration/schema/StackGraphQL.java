@@ -26,32 +26,21 @@ public class StackGraphQL implements GraphQLQueryResolver, GraphQLMutationResolv
 
     public String verify(String accessKey, String secretKey) {
         logger.info("received request verify");
-        //verifyService.verifyKey(new Verify(accessKey, secretKey));
+        verifyService.verifyKey(new Verify(accessKey, secretKey));
         logger.info("return response verify");
         return "success";
     }
 
     public List<StatusResponse> status() {
         logger.info("received request status");
-        //return verifyService.verifyStatus();
-        var list = new ArrayList<StatusResponse>(
-                Arrays.asList(new StatusResponse("resource","false","subnet")));
-        list.add(new StatusResponse("ec2.aws.crossplane.io/v1beta1","true","Subnet"));
-        list.add(new StatusResponse("ec2.aws.crossplane.io/v1beta1","false","Subnet"));
-        list.add(new StatusResponse("ec2.aws.crossplane.io/v1beta1","false","VPC"));
-        list.add(new StatusResponse("ec2.aws.crossplane.io/v1beta1","false","SecurityGroup"));
-        list.add(new StatusResponse("eks.aws.crossplane.io/v1alpha1","true","NodeGroup"));
-        list.add(new StatusResponse("ec2.aws.crossplane.io/v1beta1","true","InternetGateway"));
+         var listStatus = verifyService.verifyStatus();
         logger.info("return response status");
-        return list;
+        return listStatus;
     }
 
     public String stackInfra(StackInfraInput stackInfraInput) {
         logger.info("received request stackInfra");
-        System.out.println(stackInfraInput.getAccessKey() +stackInfraInput.getDesiredSize()+
-                stackInfraInput.getEnvironment()+stackInfraInput.getMaxSize()+ stackInfraInput.getRoute53Domain()+
-                stackInfraInput.getVpc()+stackInfraInput.getSubnet());
-        //verifyService.stackInfra(stackInfraInput);
+        verifyService.stackInfra(stackInfraInput);
         logger.info("return response stackInfra");
         return "started";
     }
