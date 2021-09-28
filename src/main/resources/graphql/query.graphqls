@@ -3,6 +3,9 @@ type StatusResponse{
     finish: String
     kind: String
 }
+type StatusInfra{
+    started: String
+}
 type Status{
     completed: Boolean
     status: [StatusResponse]
@@ -23,11 +26,16 @@ input StackInfraInput{
     vpc: String
     subnet: [SubNet]
 }
-
+input StatusInput{
+    environment: String
+    accessKey: String
+    secretKey: String
+    route53Domain: String
+}
 type Query{
-    status: Status
+    status(statusInput: StatusInput): Status
 }
 type Mutation{
     verify(accessKey: String, secretKey: String): String
-    stackInfra(stackInfraInput: StackInfraInput!): String
+    stackInfra(stackInfraInput: StackInfraInput!): StatusInfra
 }

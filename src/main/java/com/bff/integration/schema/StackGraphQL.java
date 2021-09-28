@@ -3,6 +3,8 @@ package com.bff.integration.schema;
 
 import com.bff.integration.model.StackInfraInput;
 import com.bff.integration.model.Status;
+import com.bff.integration.model.StatusInfra;
+import com.bff.integration.model.StatusInput;
 import com.bff.integration.model.StatusResponse;
 import com.bff.integration.model.Verify;
 import com.bff.integration.service.VerifyService;
@@ -32,17 +34,17 @@ public class StackGraphQL implements GraphQLQueryResolver, GraphQLMutationResolv
         return "success";
     }
 
-    public Status status() {
+    public Status status(StatusInput statusInput) {
         logger.info("received request status");
-         var status = verifyService.verifyStatus();
+         var status = verifyService.verifyStatus(statusInput);
         logger.info("return response status");
         return status;
     }
 
-    public String stackInfra(StackInfraInput stackInfraInput) {
+    public StatusInfra stackInfra(StackInfraInput stackInfraInput) {
         logger.info("received request stackInfra");
-        verifyService.stackInfra(stackInfraInput);
+        var statusInfra = verifyService.stackInfra(stackInfraInput);
         logger.info("return response stackInfra");
-        return "started";
+        return statusInfra;
     }
 }

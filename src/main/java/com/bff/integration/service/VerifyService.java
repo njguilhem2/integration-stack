@@ -1,23 +1,18 @@
 package com.bff.integration.service;
 
+import com.bff.integration.config.RestTemplanteConfig;
 import com.bff.integration.model.AddonsExecute;
 import com.bff.integration.model.KeyResponse;
-import com.bff.integration.config.RestTemplanteConfig;
 import com.bff.integration.model.KindResponse;
 import com.bff.integration.model.StackInfraInput;
 import com.bff.integration.model.Status;
-import com.bff.integration.model.StatusResponse;
+import com.bff.integration.model.StatusInfra;
+import com.bff.integration.model.StatusInput;
 import com.bff.integration.model.Verify;
-import com.bff.integration.model.VerifyResponse;
 import com.bff.integration.schema.exceptions.DomainException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class VerifyService {
@@ -44,18 +39,18 @@ public class VerifyService {
         }
     }
 
-    public String stackInfra(StackInfraInput stackInfraInput) {
+    public StatusInfra stackInfra(StackInfraInput stackInfraInput) {
         restTemplanteConfig.restTemplate()
                 .postForEntity(urlStack, stackInfraInput, KeyResponse.class);
-        return "started";
+        return new StatusInfra("started");
     }
 
-    public Status verifyStatus() {
+    public Status verifyStatus(StatusInput statusInput) {
         var verifyResponse =
                 restTemplanteConfig.restTemplate().getForObject(urlStatusInfra, KindResponse.class);
         if (Boolean.getBoolean(verifyResponse.getCompleted()) == true) {
-            AddonsExecute addonsExecute = new AddonsExecute("loan-itau","AKIAWRXEZPKTKAUYGDQA","fJxBQvWtPbg7/f11VfoB/bx9w+PSluRdhEKMGsdt",
-                    "itsmelgar.com");
+            AddonsExecute addonsExecute = new AddonsExecute(statusInput.getEnvironment(),statusInput.getAccessKey(),
+                    statusInput.getSecretKey(),statusInput.getRoute53Domain());
             restTemplanteConfig.restTemplate().postForEntity(urlAddons,addonsExecute,KindResponse.class);
         }
         return new Status(Boolean.getBoolean(verifyResponse.getCompleted()), verifyResponse.getKindStatus());
