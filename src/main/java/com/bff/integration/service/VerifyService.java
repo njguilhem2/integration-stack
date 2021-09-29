@@ -9,13 +9,17 @@ import com.bff.integration.model.Status;
 import com.bff.integration.model.StatusInfra;
 import com.bff.integration.model.StatusInput;
 import com.bff.integration.model.Verify;
+import com.bff.integration.schema.StackGraphQL;
 import com.bff.integration.schema.exceptions.DomainException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class VerifyService {
+    Logger logger = LoggerFactory.getLogger(VerifyService.class);
 
     @Value("${http.request.verify}")
     private String urlVerify;
@@ -46,13 +50,19 @@ public class VerifyService {
     }
 
     public Status verifyStatus(StatusInput statusInput) {
+        Boolean completed = false;
+        logger.info("send request status");
         var verifyResponse =
                 restTemplanteConfig.restTemplate().getForObject(urlStatusInfra, KindResponse.class);
-        if (Boolean.getBoolean(verifyResponse.getCompleted()) == true) {
+        if (verifyResponse.getCompleted().equals("true")) {
+            logger.info("send request addons");
             AddonsExecute addonsExecute = new AddonsExecute(statusInput.getEnvironment(),statusInput.getAccessKey(),
                     statusInput.getSecretKey(),statusInput.getRoute53Domain());
             restTemplanteConfig.restTemplate().postForEntity(urlAddons,addonsExecute,KindResponse.class);
+            logger.info("addons started");
+            completed = true;
         }
-        return new Status(Boolean.getBoolean(verifyResponse.getCompleted()), verifyResponse.getKindStatus());
+        var status = new Status(completed, verifyResponse.getKindStatus());
+        return status;
     }
 }
