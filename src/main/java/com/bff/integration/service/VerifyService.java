@@ -58,7 +58,7 @@ public class VerifyService {
             logger.info("send request addons");
             AddonsExecute addonsExecute = new AddonsExecute(statusInput.getEnvironment(),statusInput.getAccessKey(),
                     statusInput.getSecretKey(),statusInput.getRoute53Domain());
-            restTemplanteConfig.restTemplate().postForEntity(urlAddons,addonsExecute,KindResponse.class);
+            /*restTemplanteConfig.restTemplate().postForEntity(urlAddons,addonsExecute,KindResponse.class);*/
             logger.info("addons started");
             completed = true;
         }
