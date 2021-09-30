@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatusInput {
-    private String environment;
-    private String accessKey;
-    private String secretKey;
+public class JenkinsStatusRequest {
     private String route53Domain;
+    private String environment;
 }
