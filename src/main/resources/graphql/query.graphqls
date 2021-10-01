@@ -26,16 +26,18 @@ input StackInfraInput{
     vpc: String
     subnet: [SubNet]
 }
-input StatusInput{
+input AddonsInput{
     environment: String
     accessKey: String
     secretKey: String
     route53Domain: String
 }
 type Query{
-    status(statusInput: StatusInput): Status
+    status: Status
+    statusJenkins(route53Domain: String,environment: String): Boolean
 }
 type Mutation{
+    addons(addonsInput: AddonsInput): String
     verify(accessKey: String, secretKey: String): String
     stackInfra(stackInfraInput: StackInfraInput!): StatusInfra
 }

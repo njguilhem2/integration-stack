@@ -16,3 +16,4 @@ http:
       stack: "http://connector.melgar.link/v1/orange/create"
       status-infra: "http://connector.melgar.link/v1/orange/status"
       addons: "http://connector.melgar.link/v1/orange/addon"
+      status-jenkins: "http://connector.melgar.link/v1/orange/jenkins"
