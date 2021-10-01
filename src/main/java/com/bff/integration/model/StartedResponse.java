@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JenkinsStatusRequest {
-    private String domain;
-    private String environment;
+public class StartedResponse {
+    private Boolean started;
 }
